@@ -1,4 +1,4 @@
-const { Book, User } = require('../models');
+const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -31,8 +31,22 @@ const resolvers = {
              const token = signToken(user);
              return { token, user };
         },
-        saveBook: async (parent, { saveBookContent }) => {
-            return console.log(saveBookContent)
+        saveBook: async (parent,  saveBookContent, context ) => {
+
+            const user = await User.findOneAndUpdate(
+                // { _id: context.user._id },
+                { username: "test" },
+                { $addToSet: { savedBooks: saveBookContent.book }},
+                { new: true }
+            )
+
+            if (!user) {
+                throw AuthenticationError;
+            }
+
+            // const token = signToken(user);
+
+            return user;
         }
     }
 }
