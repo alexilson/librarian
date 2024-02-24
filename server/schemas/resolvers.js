@@ -44,8 +44,6 @@ const resolvers = {
                 throw AuthenticationError;
             }
 
-            // const token = signToken(user);
-
             return user;
         },
         removeBook: async (parent, {bookIdRm}, context ) => {
