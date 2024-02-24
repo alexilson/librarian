@@ -47,6 +47,21 @@ const resolvers = {
             // const token = signToken(user);
 
             return user;
+        },
+        removeBook: async (parent, {bookIdRm}, context ) => {
+            console.log(bookIdRm);
+            const user = await User.findOneAndUpdate(
+                // { _id: context.user._id },
+                { username: "test" },
+                { $pull: { savedBooks: { _id: bookIdRm}}},
+                { new: true }
+            )
+
+            if (!user) {
+                throw AuthenticationError;
+            }
+
+            return user;
         }
     }
 }
