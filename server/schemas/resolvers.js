@@ -32,10 +32,10 @@ const resolvers = {
              return { token, user };
         },
         saveBook: async (parent,  saveBookContent, context ) => {
-
+            console.log(saveBookContent)
             const user = await User.findOneAndUpdate(
-                // { _id: context.user._id },
-                { username: "test" },
+                { _id: context.user._id },
+                // { username: "test" },
                 { $addToSet: { savedBooks: saveBookContent.book }},
                 { new: true }
             )
@@ -49,8 +49,8 @@ const resolvers = {
         removeBook: async (parent, {bookIdRm}, context ) => {
             console.log(bookIdRm);
             const user = await User.findOneAndUpdate(
-                // { _id: context.user._id },
-                { username: "test" },
+                { _id: context.user._id },
+                // { username: "test" },
                 { $pull: { savedBooks: { _id: bookIdRm}}},
                 { new: true }
             )

@@ -49,7 +49,7 @@ const SignupForm = () => {
         variables: { ...userFormData }
       });
 
-      console.log(data)
+      // console.log(data)
 
       Auth.login(data.addNewUser.token);
     } catch (err) {
