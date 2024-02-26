@@ -20,7 +20,7 @@ const SavedBooks = () => {
 
   // graphql useQuery
   const { loading, data } = useQuery(GET_ME, {
-    variables: { _id: userData. }
+    variables: { _id: userData._id }
   })
 
   // use this to determine if `useEffect()` hook needs to run again
