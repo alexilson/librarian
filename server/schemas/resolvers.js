@@ -3,9 +3,20 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        me: async (parent, { _id }) => {
-            const params = _id ? { _id } : {}
-            return User.find(params);
+        // me: async (parent, { _id }) => {
+        //     const params = _id ? { _id } : {}
+        //     return User.find(params);
+        // }
+        me: async (parent, args, context) => {
+            console.log("Running ME")
+            console.log(context.user._id);
+            if (context.user) {
+                return User.findOne({ _id: context.user._id }) //.populate('savedBooks')
+                // const user = User.findOne({ _id: context.user._id }).populate('savedBooks')
+                // console.log(user)
+                // return user
+            }
+            throw AuthenticationError;
         }
     },
     Mutation: {

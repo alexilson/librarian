@@ -16,12 +16,16 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
 
   // graphql useQuery
   const { loading, data } = useQuery(GET_ME, {
-    variables: { _id: userData._id }
+    variables: { _id: '' }
   })
+
+  const results = data?.me || {}
+  console.log(results)
+  const userData = results
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
@@ -67,7 +71,7 @@ const SavedBooks = () => {
       }
 
       const updatedUser = await response.json();
-      setUserData(updatedUser);
+      // setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
