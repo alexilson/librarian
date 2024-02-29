@@ -8,8 +8,8 @@ const resolvers = {
         //     return User.find(params);
         // }
         me: async (parent, args, context) => {
-            console.log("Running ME")
-            console.log(context.user._id);
+            // console.log("Running ME")
+            // console.log(context.user._id);
             if (context.user) {
                 return User.findOne({ _id: context.user._id }) //.populate('savedBooks')
                 // const user = User.findOne({ _id: context.user._id }).populate('savedBooks')
@@ -43,7 +43,7 @@ const resolvers = {
              return { token, user };
         },
         saveBook: async (parent,  saveBookContent, context ) => {
-            console.log(saveBookContent)
+            // console.log(saveBookContent)
             const user = await User.findOneAndUpdate(
                 { _id: context.user._id },
                 // { username: "test" },
@@ -58,8 +58,8 @@ const resolvers = {
             return user;
         },
         removeBook: async (parent, {bookIdRm}, context ) => {
-            console.log("book to remove", bookIdRm);
-            console.log("user ID", context.user._id)
+            // console.log("book to remove", bookIdRm);
+            // console.log("user ID", context.user._id)
             const user = await User.findOneAndUpdate(
                 { _id: context.user._id },
                 // { username: "test" },

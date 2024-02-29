@@ -27,7 +27,7 @@ const SavedBooks = () => {
   })
 
   const results = data?.me || {}
-  console.log(results)
+  // console.log(results)
   const userData = results
 
   // use this to determine if `useEffect()` hook needs to run again
