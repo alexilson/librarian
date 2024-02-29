@@ -8,8 +8,9 @@ import {
 } from 'react-bootstrap';
 
 // graphql imports
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
+import { REMOVE_BOOK } from '../utils/mutations';
 
 import { getMe, deleteBook } from '../utils/API';  // express endpoint
 import Auth from '../utils/auth';
@@ -17,6 +18,8 @@ import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
+
+  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   // graphql useQuery
   const { loading, data } = useQuery(GET_ME, {
@@ -57,26 +60,31 @@ const SavedBooks = () => {
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    
+    const user = await removeBook({
+      variables: {bookIdRm: bookId}
+    });
 
-    if (!token) {
-      return false;
-    }
+    // const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    try {
-      const response = await deleteBook(bookId, token);
+    // if (!token) {
+    //   return false;
+    // }
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+    // try {
+    //   const response = await deleteBook(bookId, token);
 
-      const updatedUser = await response.json();
+    //   if (!response.ok) {
+    //     throw new Error('something went wrong!');
+    //   }
+
+    //   const updatedUser = await response.json();
       // setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
-    } catch (err) {
-      console.error(err);
-    }
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   // if data isn't here yet, say so

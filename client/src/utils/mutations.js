@@ -50,7 +50,7 @@ mutation SaveBook($book: saveBookContent) {
 `;
 
 export const REMOVE_BOOK = gql`
-mutation RemoveBook($bookIdRm: ID) {
+mutation RemoveBook($bookIdRm: String) {
     removeBook(bookIdRm: $bookIdRm) {
       _id
       username
